@@ -1,0 +1,10 @@
+# Applying and booting this configuration PERMANENTLY changes security eFuses.
+# Do not flash without reviewing WIFI_SETUP.md and obtaining owner approval.
+CONFIG_SECURE_BOOT=y
+CONFIG_SECURE_BOOT_V2_ENABLED=y
+CONFIG_SECURE_BOOT_BUILD_SIGNED_BINARIES=y
+CONFIG_SECURE_BOOT_SIGNING_KEY="../private/secure_boot_signing_key.pem"
+CONFIG_SECURE_FLASH_ENC_ENABLED=y
+CONFIG_SECURE_FLASH_ENCRYPTION_MODE_DEVELOPMENT=y
+# Development mode retains a signed USB firmware update path for the later email app.
+# It is not a production physical-access lockdown configuration.

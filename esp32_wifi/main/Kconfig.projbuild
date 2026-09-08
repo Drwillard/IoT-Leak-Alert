@@ -1,0 +1,5 @@
+menu "Wi-Fi setup"
+config WIFI_SETUP_DEVELOPMENT
+    bool "Allow reversible development provisioning with unencrypted NVS"
+    default n
+endmenu

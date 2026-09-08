@@ -1,0 +1,54 @@
+# Python environments, bytecode, and tool caches
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Local credentials, signing keys, and device flash backups
+/private/
+/mailjet cres.txt
+.env
+.env.*
+!.env.example
+!.env.sample
+*.key
+*.pem
+*.p12
+*.pfx
+/firmware-backup*.bin
+
+# ESP-IDF generated builds and machine-specific configuration
+# Keep sdkconfig.defaults, sdkconfig.development, sdkconfig.security,
+# CMakeLists.txt, partition tables, and dependency lock files in Git.
+/esp32_wifi/build*/
+/esp32_wifi/managed_components/
+/esp32_wifi/sdkconfig
+/esp32_wifi/sdkconfig.old
+/esp32_wifi/sdkconfig.secure
+/esp32_wifi/sdkconfig.secure.old
+/esp32_wifi/sdkconfig.development.generated*
+/wifi-artifact-hashes.txt
+
+# Run logs and generated camera capture
+*.log
+/camera.jpg
+
+# Downloaded Windows USB driver installer and extracted files
+/CP210x_driver/
+/CP210x_driver.zip
+
+# Local editor and operating-system files
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+Desktop.ini
