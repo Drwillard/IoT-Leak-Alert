@@ -42,7 +42,7 @@ def checked_build():
              (0x20000, build / 'esp32_wifi.bin')]
     for _, path in files:
         if not path.is_file():
-            raise RuntimeError('Build the development firmware first with build_wifi.ps1 -Development.')
+            raise RuntimeError('Build the development firmware first with ./build_wifi.sh --development (Bash) or .\\build_wifi.ps1 -Development (PowerShell).')
     return files
 
 

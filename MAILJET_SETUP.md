@@ -2,8 +2,8 @@
 
 Run from this folder in a terminal:
 
-```powershell
-.venv\Scripts\python.exe mailjet_setup.py --development
+```bash
+.venv/bin/python mailjet_setup.py --development
 ```
 
 Choose the verified sender, recipient, and minimum interval (1–1440 minutes).
@@ -17,8 +17,8 @@ The development firmware stores these settings **unencrypted** in device flash.
 No permanent security/eFuse changes are made. Setup uses USB and works without
 Wi-Fi. Use `--port COM6` if automatic port selection is ambiguous.
 
-```powershell
-.venv\Scripts\python.exe mailjet_setup.py --development --status
+```bash
+.venv/bin/python mailjet_setup.py --development --status
 ```
 
 Status shows addresses, interval, and alarm state, never keys. Sensor calibration,
@@ -34,7 +34,10 @@ alarm settings remain supported; running Mailjet setup creates the separate prof
 
 Firmware update (development only, preserves saved settings):
 
-```powershell
-.\build_wifi.ps1 -Development
-.venv\Scripts\python.exe flash_development.py --port COM6 --app-only
+On Windows, use `.\build_wifi.ps1 -Development` and replace `.venv/bin/python`
+with `.\.venv\Scripts\python.exe` in the commands below.
+
+```bash
+./build_wifi.sh --development
+.venv/bin/python flash_development.py --port COM6 --app-only
 ```

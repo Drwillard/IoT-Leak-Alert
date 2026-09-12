@@ -29,8 +29,8 @@ their existing template.
 
 Inspect status without sending email:
 
-```powershell
-.venv\Scripts\python.exe water_setup.py --status
+```bash
+.venv/bin/python water_setup.py --status
 ```
 
 Look for `test_button_ready`, `test_button_presses`, `test_button_pending`,

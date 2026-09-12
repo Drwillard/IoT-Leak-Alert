@@ -1,4 +1,4 @@
-﻿# ESP32 Wi-Fi and Mailjet development test
+# ESP32 Wi-Fi and Mailjet development test
 
 For the autonomous water detector, follow [WATER_SENSOR.md](WATER_SENSOR.md)
 and run `water_setup.py --development`. Alerts remain disabled until calibration
@@ -18,12 +18,53 @@ The installer reads `private/board.json` for the local `expected_mac` and
 board's actual MAC and verified backup file before installing. This ignored file
 keeps device identity out of Git while retaining the installer's board check.
 
-## 1. Connect Wi-Fi
+## Local setup (macOS / Linux)
 
-In PowerShell, from `C:\code\arduino`:
+Use Python 3.10 or newer. From the repository folder:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --only-binary=cryptography,cffi -r requirements.txt
+```
+
+Activate the environment with `source .venv/bin/activate` in each new terminal.
+The install command uses prebuilt cryptography packages to avoid requiring a
+local Rust compiler and Xcode command-line tools on macOS.
+Docker must be installed and running for firmware builds; ESP-IDF and its build
+tools run inside the pinned Docker image.
+
+```bash
+./build_wifi.sh --development
+```
+
+Omit the flag for the default build, or use `--security` for the secure build.
+These modes cannot be combined. The build script does not flash the board.
+The secure build reuses or generates `private/secure_boot_signing_key.pem`.
+
+On Windows, use the PowerShell script:
 
 ```powershell
-.\.venv\Scripts\python.exe wifi_setup.py --development
+py -3 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\build_wifi.ps1 -Development
+```
+
+Use Python 3.10 or newer. Omit `-Development` for the default build, or use
+`-Security` for the secure build. In the commands below, Windows users should
+replace `.venv/bin/python` with `.\.venv\Scripts\python.exe` and
+`./build_wifi.sh --development` with `.\build_wifi.ps1 -Development`.
+
+Windows port names such as `COM6` below refer to the original setup. On macOS
+or Linux, omit `--port` for detection or supply the board's `/dev/cu.*` or
+`/dev/ttyUSB*` device path.
+
+## 1. Connect Wi-Fi
+
+From the repository folder:
+
+```bash
+.venv/bin/python wifi_setup.py --development
 ```
 
 Select a network and enter its password at the hidden prompt. You can rescan
@@ -47,8 +88,8 @@ traffic is also unencrypted and requires a trusted PC and cable.
 
 ## 2. Send one Mailjet test email from the ESP32
 
-```powershell
-.\.venv\Scripts\python.exe email_test.py --development
+```bash
+.venv/bin/python email_test.py --development
 ```
 
 Enter your verified Mailjet sender address, recipient (defaults to yourself),
@@ -63,8 +104,8 @@ active in your Mailjet account.
 
 To validate with Mailjet without delivering an email:
 
-```powershell
-.\.venv\Scripts\python.exe email_test.py --development --sandbox
+```bash
+.venv/bin/python email_test.py --development --sandbox
 ```
 
 This sets `SandboxMode` to true and asks you to type `TEST`. A successful sandbox
@@ -89,10 +130,10 @@ does not save keys or arm the water alarm.
 
 ## Status, scans and forgetting a test network
 
-```powershell
-.\.venv\Scripts\python.exe wifi_setup.py --status
-.\.venv\Scripts\python.exe wifi_setup.py --development --scan
-.\.venv\Scripts\python.exe wifi_setup.py --development --forget
+```bash
+.venv/bin/python wifi_setup.py --status
+.venv/bin/python wifi_setup.py --development --scan
+.venv/bin/python wifi_setup.py --development --forget
 ```
 
 Use `--port COM6` if needed; otherwise the USB port is detected. Close Arduino
@@ -118,10 +159,10 @@ Use temporary test credentials and keep your Mailjet keys private.
 
 ## Rebuild / reinstall when developing firmware
 
-```powershell
-.\build_wifi.ps1 -Development
-.\.venv\Scripts\python.exe flash_development.py --port COM6 --app-only
-.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+```bash
+./build_wifi.sh --development
+.venv/bin/python flash_development.py --port COM6 --app-only
+.venv/bin/python -m unittest discover -s tests -v
 ```
 
 Docker Desktop must be running. The build uses `espressif/idf:v5.5.2`.
@@ -135,4 +176,3 @@ The earlier secure-build sources and restricted signing key remain available
 for later review, but that firmware is not installed. Do not install a secure
 bootloader or burn eFuses during this development phase. The new email changes
 have been built and validated in development mode only.
-

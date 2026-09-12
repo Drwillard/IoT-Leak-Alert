@@ -39,8 +39,8 @@ References: [DIYables specifications and linked ESP32 tutorial](https://diyables
 
 Wire the sensor, reconnect USB, then run from `C:\code\arduino`:
 
-```powershell
-.\.venv\Scripts\python.exe water_setup.py --development
+```bash
+.venv/bin/python water_setup.py --development
 ```
 
 The interactive program:
@@ -96,10 +96,10 @@ power supply. No permanent security settings or eFuses are changed.
 
 ## Observe or stop
 
-```powershell
-.\.venv\Scripts\python.exe water_setup.py --status
-.\.venv\Scripts\python.exe water_setup.py --development --watch
-.\.venv\Scripts\python.exe water_setup.py --development --disable
+```bash
+.venv/bin/python water_setup.py --status
+.venv/bin/python water_setup.py --development --watch
+.venv/bin/python water_setup.py --development --disable
 ```
 
 `--watch` starts sampling if needed but does not arm a disabled alarm. It also
@@ -141,7 +141,8 @@ Firmware compilation and software tests are complete. Physical probe calibration
 and receipt of an automatic water email must still be tested with your wiring
 and locally entered keys. The first installation leaves sensing and alerts off.
 
-For future firmware edits, use `build_wifi.ps1 -Development` and
+For future firmware edits, use `./build_wifi.sh --development` (Bash) or
+`.\build_wifi.ps1 -Development` (PowerShell) and
 `flash_development.py --port COM6 --app-only` to preserve Wi-Fi and alarm settings.
 An already armed alarm resumes after an app update; disable it first if you are
 bench-testing code changes.
